@@ -1,0 +1,12 @@
+<litepal>
+
+    <dbname value="baldstrong_weather" />
+
+    <version value="1" />
+
+    <list>
+        <mapping class="com.baldstrongweather.android.db.Province" />
+        <mapping class="com.baldstrongweather.android.db.City" />
+        <mapping class="com.baldstrongweather.android.db.County" />
+    </list>
+</litepal>
