@@ -24,6 +24,8 @@ import com.baldstrongweather.android.util.HttpUtil;
 import com.baldstrongweather.android.util.Utility;
 import com.bumptech.glide.Glide;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 
@@ -68,11 +70,13 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //背景与状态栏融合功能是Android5.0及以上的系统才支持，在此判断
         if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            //将活动布局显示在状态栏上面
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            //将状态栏设置为透明
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            UltimateBar ultimateBar = new UltimateBar(this);
+            ultimateBar.setImmersionBar();
+//            View decorView = getWindow().getDecorView();
+//            //将活动布局显示在状态栏上面
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            //将状态栏设置为透明
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_weather);
         //初始化各控件
