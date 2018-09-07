@@ -19,6 +19,6 @@ public class Forecast {
 
     public class More {
         @SerializedName("txt_d")
-        public String info;
+        public String info;             //天气情况
     }
 }

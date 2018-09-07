@@ -40,6 +40,12 @@
 
                 <include layout="@layout/title" />
                 <include layout="@layout/now" />
+
+                <include
+                    layout="@layout/date"
+                    android:layout_height="wrap_content" />
+
+                <include layout="@layout/temp" />
                 <include layout="@layout/forecast" />
                 <include layout="@layout/aqi" />
                 <include layout="@layout/suggestion" />

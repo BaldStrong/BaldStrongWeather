@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="#8000">
+
+    <!--android:layout_marginLeft="15dp"-->
+    <TextView
+        android:id="@+id/title_forest"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="10dp"
+        android:text="预报"
+        android:textColor="#fff"
+        android:textSize="20sp"/>
+
+    <!--填充date_text-->
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/title_forest">
+    </LinearLayout>
+
+    <com.baldstrongweather.android.widget.WeatnerChartView
+        android:id="@+id/weather_char1"
+        android:layout_below="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+
+    <com.baldstrongweather.android.widget.WeatnerChartView
+        android:id="@+id/weather_char2"
+        android:orientation="vertical"
+        android:layout_below="@+id/weather_char1"
+        android:layout_width="match_parent"
+        android:layout_height="95dp" />
+
+
+</RelativeLayout>

@@ -1,7 +1,6 @@
 package com.baldstrongweather.android;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
@@ -22,12 +21,15 @@ import com.baldstrongweather.android.gson.Forecast;
 import com.baldstrongweather.android.gson.Weather;
 import com.baldstrongweather.android.util.HttpUtil;
 import com.baldstrongweather.android.util.Utility;
+import com.baldstrongweather.android.widget.WeatherItem;
+import com.baldstrongweather.android.widget.WeatnerChartView;
 import com.bumptech.glide.Glide;
 
 import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,7 +47,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     private TextView weatherInfoText;
 
-    private LinearLayout forecastLayout;
+    private LinearLayout forecastLayout;            //forecast_item
+
+    private LinearLayout dateLayout;                //date_item
 
     private TextView aqiText;
 
@@ -64,6 +68,10 @@ public class WeatherActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;       //抽屉布局
 
     private Button navButton;               //导航栏按钮：切换城市按钮
+
+    private WeatnerChartView chart1;
+
+    private WeatnerChartView chart2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +94,7 @@ public class WeatherActivity extends AppCompatActivity {
         degreeText = (TextView) findViewById(R.id.degree_text);
         weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
+        dateLayout = (LinearLayout) findViewById(R.id.date_layout);
         aqiText = (TextView) findViewById(R.id.aqi_text);
         pm25Text = (TextView) findViewById(R.id.pm25_text);
         comfortText = (TextView) findViewById(R.id.comfort_text);
@@ -135,6 +144,36 @@ public class WeatherActivity extends AppCompatActivity {
         } else {
             loadBingPic();
         }
+
+        //折线图
+        chart1= (WeatnerChartView) findViewById(R.id.weather_char1);
+        chart2= (WeatnerChartView) findViewById(R.id.weather_char2);
+    }
+
+    /**
+     * 折线图数据添加
+     */
+    private void initData(Weather weather)
+    {
+        ArrayList<WeatherItem> list= new ArrayList<WeatherItem>();
+        ArrayList<WeatherItem> list1= new ArrayList<WeatherItem>();
+        dateLayout.removeAllViews();
+        String month_day = null;
+        for (Forecast forecast : weather.forecastList) {
+           // list.add(new WeatherItem("",Float.parseFloat(forecast.date)));
+           //infoText.setText(forecast.more.info);
+            month_day = (forecast.date).replace("2018-", "");
+            View view = LayoutInflater.from(this).inflate(R.layout.date_item, dateLayout, false);
+            TextView dateText = (TextView) view.findViewById(R.id.date_text);
+            dateText.setText(month_day);
+            list.add(new WeatherItem(forecast.more.info, Float.parseFloat(forecast.temperature.max)));
+            list1.add(new WeatherItem("",Float.parseFloat(forecast.temperature.min)));
+            dateLayout.addView(view);
+        }
+        chart1.SetTuView(list, "");//单位: 摄氏度
+        chart1.invalidate();
+        chart2.SetTuView(list1, "");
+        chart2.invalidate();
     }
 
     /**
@@ -169,6 +208,8 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+                            initData(weather);              //加载折线图
+
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -220,7 +261,8 @@ public class WeatherActivity extends AppCompatActivity {
         titleUpdateTime.setText(updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
-        forecastLayout.removeAllViews();
+        forecastLayout.removeAllViews();                    //重新加载控件，清空容器
+        //动态添加
         for (Forecast forecast : weather.forecastList) {
             View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecastLayout, false);
             TextView dateText = (TextView) view.findViewById(R.id.date_text);

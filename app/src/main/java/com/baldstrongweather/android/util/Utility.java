@@ -12,6 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 先使用JSONArray和JSONObject将数据解析出来,然后组装成实体类对象,
+ * 再调用sava()方法将数据存储到数据库中,这里使用原生json处理方式
+ */
 public class Utility {
 
     /**

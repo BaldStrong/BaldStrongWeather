@@ -13,7 +13,7 @@ public class Basic {
     public Update update;
 
     public class Update {
-        @SerializedName("loc")
+        @SerializedName("loc")          //更新时间
         public String updateTime;
     }
 }

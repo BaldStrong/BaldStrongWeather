@@ -147,8 +147,8 @@ public class ChooseAreaFragment extends Fragment {
      * 查询全国所有的省，优先从数据库中查询，如果没有再到服务器上查询
      */
     private void queryProvinces() {
-        titleText.setText("中国");
-        backButton.setVisibility(View.GONE);                //将返回按钮隐藏起来
+        titleText.setText("中国");                           //将标题设置为“中国”
+        backButton.setVisibility(View.GONE);                //将返回按钮隐藏起来，因省级列表不能再返回了
         provinceList = DataSupport.findAll(Province.class); //调用LitePal的查询接口从数据库中读取省级数据
         if (provinceList.size() > 0) {
             dataList.clear();

@@ -64,16 +64,18 @@
                 android:id="@+id/pm25_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginRight="110sp"
+                android:layout_gravity="right"
                 android:textColor="#fff"
                 android:textSize="40sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="right"
+                android:layout_marginRight="60sp"
                 android:text="PM2.5指数"
-                android:textColor="#fff"/>
+                android:textColor="#fff" />
         </LinearLayout>
     </LinearLayout>
 
