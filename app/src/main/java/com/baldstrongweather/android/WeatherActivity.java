@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,6 @@ import com.bumptech.glide.Glide;
 import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -105,6 +105,10 @@ public class WeatherActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navButton = (Button) findViewById(R.id.nav_button);
 
+        //折线图
+        chart1= (WeatnerChartView) findViewById(R.id.weather_char1);
+        chart2= (WeatnerChartView) findViewById(R.id.weather_char2);
+
         navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +118,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);             //设置下拉进度条颜色为主题中的colorPrimary
+
+
         final String weatherId;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -123,6 +129,8 @@ public class WeatherActivity extends AppCompatActivity {
             Weather weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
+            initData(weather);              //加载折线图
+
         } else {
             //无缓存时去服务器查询天气
             weatherId = getIntent().getStringExtra("weather_id");
@@ -137,6 +145,11 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+        //首次进入自动刷新
+        swipeRefresh.measure(0,0);
+        swipeRefresh.setRefreshing(true);
+        requestWeather(weatherId);
+
         //设置bing每日一图
         String bingPic = prefs.getString("bing_pic", null);
         if (bingPic != null) {
@@ -145,9 +158,7 @@ public class WeatherActivity extends AppCompatActivity {
             loadBingPic();
         }
 
-        //折线图
-        chart1= (WeatnerChartView) findViewById(R.id.weather_char1);
-        chart2= (WeatnerChartView) findViewById(R.id.weather_char2);
+
     }
 
     /**
@@ -190,7 +201,8 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
-                        swipeRefresh.setRefreshing(false);                              //刷新事件结束，并隐藏刷新进度条
+                        //刷新事件结束，并隐藏刷新进度条
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
 
@@ -213,6 +225,7 @@ public class WeatherActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
+                        //刷新事件结束，并隐藏刷新进度条
                         swipeRefresh.setRefreshing(false);
                     }
                 });

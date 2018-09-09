@@ -13,7 +13,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="空气质量"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:textSize="18sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +65,7 @@
                 android:id="@+id/pm25_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="110sp"
+                android:layout_marginRight="80sp"
                 android:layout_gravity="right"
                 android:textColor="#fff"
                 android:textSize="40sp"/>

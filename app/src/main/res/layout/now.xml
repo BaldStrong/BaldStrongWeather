@@ -4,22 +4,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp">
+    >
 
     <TextView
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:textColor="#fff"
-        android:textSize="60sp"/>
+        android:textSize="60sp" />
 
     <TextView
         android:id="@+id/weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textSize="22sp" />
 
 </LinearLayout>
